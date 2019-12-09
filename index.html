@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meme Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<h1>George's Delightful Meme Generator</h1>
+<body>
+    <form action="#" id="form">
+        <div class="line">
+            <label for="toptext">Top Text:</label>
+            <input type="text" id="toptext" value="" class="input">
+        </div>
+        <div class="line">
+            <label for="piclink">Link to Picture:</label>
+            <input type="text" id="piclink" value ="" class="input">
+        </div>        
+        <div class="line">
+            <label for="bottext">Bottom Text:</label>
+            <input type="text" id="bottext" value ="" class="input">
+        </div>
+        <div class="subbutt">
+            <button id="subbutt" type="submit" action=get>Submit</button>
+        </div>
+    </form>
+    <div id="memespace">
+    </div> 
+</body>
+<script>
+    if (document.getElementById("form").addEventListener){
+        document.getElementById("form").addEventListener("submit", addMeme, false)
+    }
+    
+    function clearForm(){
+        var inputs = document.querySelectorAll("input");
+        for (var i = 0; i < inputs.length; i++){
+            inputs[i].value = "";
+        }
+    }
+
+    function addMeme(){
+        if (document.getElementById("piclink").value === ''){
+            alert("Please include a picture link!")
+            return;
+        }
+        var memeZone = document.getElementById("memespace");
+        var count = memeZone.children.length + 1;
+        var container = document.createElement("div");
+        var delButt = document.createElement("button");
+        var topText = document.createElement("p");
+        var imgSrc = document.createElement("img");
+        var bottText = document.createElement("p");
+        container.classList.add("memecontainer");
+        delButt.classList.add("delbutton");
+        topText.classList.add("memetext", "top");
+        imgSrc.classList.add("picture");
+        bottText.classList.add("memetext", "bottom");
+        delButt.innerText = "X";
+        topText.innerText = document.getElementById("toptext").value;
+        bottText.innerText = document.getElementById("bottext").value;
+        container.setAttribute("id", ("meme" + count));
+        delButt.setAttribute("id", ("del" + count));
+        delButt.setAttribute("onclick", ("deleteMeme('meme" + count + "')"));
+        imgSrc.setAttribute("src", document.getElementById("piclink").value);
+        memeZone.appendChild(container);
+        container.appendChild(delButt);
+        container.appendChild(topText);
+        container.appendChild(imgSrc);
+        container.appendChild(bottText);
+        clearForm();
+    }
+
+    function deleteMeme(memeId){
+        var deletion = document.getElementById(memeId);
+        console.log(deletion)
+        document.getElementById("memespace").removeChild(deletion);
+    }
+
+</script>
+</html>
